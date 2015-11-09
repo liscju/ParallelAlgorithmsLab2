@@ -38,6 +38,20 @@ class Star(object):
     def z(self):
         return self.coord[2]
 
+    def calculate_force(self, star):
+        acceleration = self._calculate_acceleration(star)
+        return (self.mass * acceleration[0],
+                self.mass * acceleration[1],
+                self.mass * acceleration[2])
+
+    def _calculate_acceleration(self, star):
+        return (G * (star.mass / (vectors_distance(star.coord, self.coord))) *
+                    (star.x - self.x),
+                G * (star.mass / (vectors_distance(star.coord, self.coord))) *
+                    (star.y - self.y),
+                G * (star.mass / (vectors_distance(star.coord, self.coord))) *
+                    (star.z - self.z))
+
 
 def create_stars(count):
     stars = []
