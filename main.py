@@ -3,7 +3,7 @@ __author__ = 'liscju'
 import random
 import sys
 
-from calculations import Star
+from calculations import Star, calculate_forces
 
 
 STAR_MASS_RANGE = (0, 50)
@@ -35,6 +35,10 @@ def run_sequence_simulation(args):
     stars = create_stars(n)
     for star in stars:
         print repr(star)
+
+    forces = calculate_forces(stars)
+    print "Calculated forces: ", forces
+    return forces
 
 
 def run_simulation(args):
