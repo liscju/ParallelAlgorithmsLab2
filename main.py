@@ -46,11 +46,11 @@ class Star(object):
 
     def _calculate_acceleration(self, star):
         return (G * (star.mass / (vectors_distance(star.coord, self.coord)**3)) *
-                    (star.x - self.x),
+                    (star.x() - self.x()),
                 G * (star.mass / (vectors_distance(star.coord, self.coord)**3)) *
-                    (star.y - self.y),
+                    (star.y() - self.y()),
                 G * (star.mass / (vectors_distance(star.coord, self.coord)**3)) *
-                    (star.z - self.z))
+                    (star.z() - self.z()))
 
 
 def create_stars(count):
