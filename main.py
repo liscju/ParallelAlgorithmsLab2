@@ -17,6 +17,7 @@ def usage():
 def vectors_distance(v1, v2):
     return math.sqrt(sum([(v2[i]-v1[i])**2 for i in range(0, 3)]))
 
+
 class Star(object):
     def __init__(self, mass, coord):
         self.mass = mass
