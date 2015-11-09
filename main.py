@@ -3,6 +3,8 @@ __author__ = 'liscju'
 import random
 import sys
 
+from mpi4py import MPI
+
 from calculations import Star, calculate_forces
 
 
@@ -41,9 +43,23 @@ def run_sequence_simulation(args):
     return forces
 
 
+def run_parallel_simulation(args):
+    if len(args) != 1:
+        usage()
+    n = int(args[0])
+
+    comm = MPI.COMM_WORLD
+    rank = comm.Get_rank()
+    p = comm.Get_size()
+
+    print "Run rank=", rank, "parallel simulation with n=", n, "and p=", p
+
+
 def run_simulation(args):
     if args[0] == "seq":
         run_sequence_simulation(args[1:])
+    elif args[0] == "par":
+        run_parallel_simulation(args[1:])
     else:
         usage()
 
