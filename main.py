@@ -4,6 +4,8 @@ import math
 import random
 import sys
 
+G = 6.67
+
 STAR_MASS_RANGE = (0, 50)
 STAR_COORDS_RANGE = (0, 100)
 
