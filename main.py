@@ -1,7 +1,7 @@
 __author__ = 'liscju'
 
-import sys
 import random
+import sys
 
 STAR_MASS_RANGE = (0, 50)
 STAR_COORDS_RANGE = (0, 100)
