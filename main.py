@@ -28,9 +28,9 @@ def create_stars(count):
 
 
 def run_sequence_simulation(args):
-    if len(args) != 2:
+    if len(args) != 1:
         usage()
-    n = int(args[1])
+    n = int(args[0])
     print "Run sequence simulation with n=", n
     stars = create_stars(n)
     for star in stars:
@@ -39,7 +39,7 @@ def run_sequence_simulation(args):
 
 def run_simulation(args):
     if args[0] == "seq":
-        run_sequence_simulation(args)
+        run_sequence_simulation(args[1:])
     else:
         usage()
 
