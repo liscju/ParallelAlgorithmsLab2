@@ -3,6 +3,9 @@ __author__ = 'liscju'
 import math
 
 
+G = 6.67
+
+
 def vectors_distance(v1, v2):
     """ Calculate distance between two given vectors """
     return math.sqrt(sum([(v2[i]-v1[i])**2 for i in range(0, 3)]))
@@ -61,6 +64,3 @@ def calculate_forces(stars):
     for i in range(0, len(stars)):
         others = stars[:i] + stars[(i+1):]
         forces.append(calculate_force(stars[i], others))
-
-
-G = 6.67
