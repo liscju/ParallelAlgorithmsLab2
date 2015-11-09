@@ -5,6 +5,7 @@ import sys
 STAR_MASS_RANGE = (0, 50)
 STAR_COORDS_RANGE = (0, 100)
 
+
 def usage():
     print "Usage:"
     print "seq N"
@@ -20,11 +21,13 @@ class Star(object):
         return "{Star: mass=(" + repr(self.mass) + "), " + \
                 "coord=" + repr(self.coord) + "}"
 
+
 def create_stars(count):
     stars = []
     for i in range(0, count):
         stars.append(Star(0, (0, 0, 0)))
     return stars
+
 
 def run_simulation(args):
     if args[0] == "seq":
