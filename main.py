@@ -1,6 +1,7 @@
 __author__ = 'liscju'
 
 import sys
+import random
 
 STAR_MASS_RANGE = (0, 50)
 STAR_COORDS_RANGE = (0, 100)
@@ -25,7 +26,11 @@ class Star(object):
 def create_stars(count):
     stars = []
     for i in range(0, count):
-        stars.append(Star(0, (0, 0, 0)))
+        mass = random.uniform(STAR_MASS_RANGE[0], STAR_MASS_RANGE[1])
+        coord_x = random.uniform(STAR_COORDS_RANGE[0], STAR_COORDS_RANGE[1])
+        coord_y = random.uniform(STAR_COORDS_RANGE[0], STAR_COORDS_RANGE[1])
+        coord_z = random.uniform(STAR_COORDS_RANGE[0], STAR_COORDS_RANGE[1])
+        stars.append(Star(mass, (coord_x, coord_y, coord_z)))
     return stars
 
 
