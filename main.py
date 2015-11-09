@@ -53,6 +53,16 @@ class Star(object):
                     (star.z() - self.z()))
 
 
+def calculate_force(star, other_stars):
+    result_force = (0, 0, 0)
+    for other_star in other_stars:
+        force = star.calculate_force(other_star)
+        result_force = (result_force[0] + force[0],
+                        result_force[1] + force[1],
+                        result_force[2] + force[2])
+    return result_force
+
+
 def create_stars(count):
     stars = []
     for i in range(0, count):
