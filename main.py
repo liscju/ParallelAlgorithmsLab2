@@ -22,6 +22,15 @@ class Star(object):
         return "{Star: mass=(" + repr(self.mass) + "), " + \
                 "coord=" + repr(self.coord) + "}"
 
+    def x(self):
+        return self.coord[0]
+
+    def y(self):
+        return self.coord[1]
+
+    def z(self):
+        return self.coord[2]
+
 
 def create_stars(count):
     stars = []
