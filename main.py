@@ -3,7 +3,7 @@ __author__ = 'liscju'
 import sys
 
 STAR_MASS_RANGE = (0, 50)
-STAR_COORDINATE_RANGE = (0, 100)
+STAR_COORDS_RANGE = (0, 100)
 
 def usage():
     print "Usage:"
