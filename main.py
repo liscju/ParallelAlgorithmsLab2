@@ -63,6 +63,13 @@ def calculate_force(star, other_stars):
     return result_force
 
 
+def calculate_forces(stars):
+    forces = []
+    for i in range(0, len(stars)):
+        others = stars[:i] + stars[(i+1):]
+        forces.append(calculate_force(stars[i], others))
+
+
 def create_stars(count):
     stars = []
     for i in range(0, count):
