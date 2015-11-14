@@ -25,7 +25,7 @@ def create_stars(count):
         coord_x = random.uniform(STAR_COORDS_RANGE[0], STAR_COORDS_RANGE[1])
         coord_y = random.uniform(STAR_COORDS_RANGE[0], STAR_COORDS_RANGE[1])
         coord_z = random.uniform(STAR_COORDS_RANGE[0], STAR_COORDS_RANGE[1])
-        stars.append(Star(mass, (coord_x, coord_y, coord_z)))
+        stars.append(Star(i, mass, (coord_x, coord_y, coord_z)))
     return stars
 
 

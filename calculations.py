@@ -13,8 +13,9 @@ def vectors_distance(v1, v2):
 
 class Star(object):
     """ Immutable class representing star """
-    def __init__(self, mass, coord):
+    def __init__(self, id, mass, coord):
         """ Class initializer from mass(number) and coord(3-tuple) """
+        self.id = id
         self.mass = mass
         self.coord = coord
 
