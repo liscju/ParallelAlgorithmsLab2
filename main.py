@@ -43,6 +43,36 @@ def run_sequence_simulation(args):
     return forces
 
 
+def _send_to_slaves_portions(comm, stars_chunks_to_send):
+    for p, chunk in enumerate(stars_chunks_to_send, 1):
+        comm.send(chunk, dest=p)
+
+
+def divide_list_to_chunks(list_, n):
+    return [list_[start::n] for start in range(n)]
+
+
+def _initialize_master(comm, n, p):
+    stars = create_stars(n)
+    chunks = divide_list_to_chunks(stars, p)
+    _send_to_slaves_portions(comm, chunks[1:])
+    return chunks[0]
+
+
+def run_master_proc(comm, n, p):
+    chunk = _initialize_master(comm, n, p)
+    print "rank 0 chunk=", chunk
+
+
+def _initialize_slave(comm):
+    return comm.recv(source=0)
+
+
+def run_slave_proc(comm, rank, n, p):
+    chunk = _initialize_slave(comm)
+    print "rank", rank, "chunk=", chunk
+
+
 def run_parallel_simulation(args):
     if len(args) != 1:
         usage()
@@ -53,6 +83,11 @@ def run_parallel_simulation(args):
     p = comm.Get_size()
 
     print "Run rank=", rank, "parallel simulation with n=", n, "and p=", p
+
+    if rank == 0:
+        run_master_proc(comm, n, p)
+    else:
+        run_slave_proc(comm, rank, n, p)
 
 
 def run_simulation(args):
