@@ -33,10 +33,7 @@ def run_sequence_simulation(args):
     if len(args) != 1:
         usage()
     n = int(args[0])
-    print "Run sequence simulation with n=", n
     stars = create_stars(n)
-    for star in stars:
-        print repr(star)
 
     forces = calculate_forces(stars)
     print "Calculated forces: ", forces
@@ -61,7 +58,6 @@ def _initialize_master(comm, n, p):
 
 def run_master_proc(comm, n, p):
     chunk = _initialize_master(comm, n, p)
-    print "rank 0 chunk=", chunk
 
 
 def _initialize_slave(comm):
@@ -70,7 +66,6 @@ def _initialize_slave(comm):
 
 def run_slave_proc(comm, rank, n, p):
     chunk = _initialize_slave(comm)
-    print "rank", rank, "chunk=", chunk
 
 
 def run_parallel_simulation(args):
@@ -82,7 +77,6 @@ def run_parallel_simulation(args):
     rank = comm.Get_rank()
     p = comm.Get_size()
 
-    print "Run rank=", rank, "parallel simulation with n=", n, "and p=", p
 
     if rank == 0:
         run_master_proc(comm, n, p)
