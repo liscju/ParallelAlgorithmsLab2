@@ -70,9 +70,35 @@ def run_slave_proc(comm, rank, n, p):
     run_main_parallel_algorithm(comm, rank, n, p, chunk)
 
 
+def _calculate_send_recv_rank_index(rank, p):
+    """ Calculate send and recv proc for given rank
+        Returns (recv_rank, send_rank)
+    """
+    if rank == 0:
+        return p - 1, 1
+    elif rank == p - 1:
+        return p - 2, 0
+    else:
+        return rank - 1, rank + 1
+
+
 def run_main_parallel_algorithm(comm, rank, n, p, chunk):
     print "Run main parallel with rank=", rank, "n=", n, "p=", p, \
         "chunks=", [star.id for star in chunk]
+
+    forces = calculate_forces(chunk)
+    chunk_to_send = chunk
+
+    recv_rank, send_rank = _calculate_send_recv_rank_index(rank, p)
+
+    for _ in range(p - 1):
+        comm.send(chunk_to_send, dest=send_rank)
+        recv_chunks = comm.recv(source=recv_rank)
+
+        print "Process rank=", rank, "received chunk=", \
+            [star.id for star in recv_chunks]
+
+        chunk_to_send = recv_chunks
 
 
 def run_parallel_simulation(args):
