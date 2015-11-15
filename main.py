@@ -49,15 +49,15 @@ def divide_list_to_chunks(list_, n):
     return [set(list_[start::n]) for start in range(n)]
 
 
-def _initialize_master(comm, n, p):
-    stars = create_stars(n)
+def _initialize_master(comm, stars, p):
     chunks = divide_list_to_chunks(stars, p)
     _send_to_slaves_portions(comm, chunks[1:])
     return chunks[0]
 
 
 def run_master_proc(comm, n, p):
-    chunk = _initialize_master(comm, n, p)
+    stars = create_stars(n)
+    chunk = _initialize_master(comm, stars, p)
     forces = run_main_parallel_algorithm(comm, 0, n, p, chunk)
     for i in range(1, p):
         forces.update(comm.recv(source=i))
