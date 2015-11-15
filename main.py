@@ -58,6 +58,7 @@ def _initialize_master(comm, n, p):
 
 def run_master_proc(comm, n, p):
     chunk = _initialize_master(comm, n, p)
+    run_main_parallel_algorithm(comm, 0, n, p, chunk)
 
 
 def _initialize_slave(comm):
@@ -66,6 +67,12 @@ def _initialize_slave(comm):
 
 def run_slave_proc(comm, rank, n, p):
     chunk = _initialize_slave(comm)
+    run_main_parallel_algorithm(comm, rank, n, p, chunk)
+
+
+def run_main_parallel_algorithm(comm, rank, n, p, chunk):
+    print "Run main parallel with rank=", rank, "n=", n, "p=", p, \
+        "chunks=", [star.id for star in chunk]
 
 
 def run_parallel_simulation(args):
