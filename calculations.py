@@ -23,6 +23,14 @@ class Star(object):
         return "{Star: mass=(" + repr(self.mass) + "), " + \
                 "coord=" + repr(self.coord) + "}"
 
+    def __hash__(self):
+        return hash((self.id, self.mass, self.coord))
+
+    def __eq__(self, other):
+        return self.id == other.id and \
+            self.mass == other.mass and \
+            self.coord == other.coord
+
     def x(self):
         return self.coord[0]
 
