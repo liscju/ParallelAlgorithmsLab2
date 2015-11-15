@@ -58,7 +58,10 @@ def _initialize_master(comm, n, p):
 
 def run_master_proc(comm, n, p):
     chunk = _initialize_master(comm, n, p)
-    run_main_parallel_algorithm(comm, 0, n, p, chunk)
+    forces = run_main_parallel_algorithm(comm, 0, n, p, chunk)
+    for i in range(1, p):
+        forces.update(comm.recv(source=i))
+    print "Total force=", forces
 
 
 def _initialize_slave(comm):
@@ -67,7 +70,8 @@ def _initialize_slave(comm):
 
 def run_slave_proc(comm, rank, n, p):
     chunk = _initialize_slave(comm)
-    run_main_parallel_algorithm(comm, rank, n, p, chunk)
+    forces = run_main_parallel_algorithm(comm, rank, n, p, chunk)
+    comm.send(forces, dest=0)
 
 
 def _calculate_send_recv_rank_index(rank, p):
@@ -107,6 +111,7 @@ def run_main_parallel_algorithm(comm, rank, n, p, my_chunk):
         chunk_to_send = recv_chunk
 
     print "Process rank=", rank, "calculated force=", forces
+    return forces
 
 
 def run_parallel_simulation(args):
