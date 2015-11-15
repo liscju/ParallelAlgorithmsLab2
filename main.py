@@ -5,8 +5,7 @@ import sys
 
 from mpi4py import MPI
 
-from calculations import Star, calculate_forces
-
+from calculations import Star, calculate_forces, calculate_force
 
 STAR_MASS_RANGE = (0, 50)
 STAR_COORDS_RANGE = (0, 100)
@@ -82,12 +81,12 @@ def _calculate_send_recv_rank_index(rank, p):
         return rank - 1, rank + 1
 
 
-def run_main_parallel_algorithm(comm, rank, n, p, chunk):
+def run_main_parallel_algorithm(comm, rank, n, p, my_chunk):
     print "Run main parallel with rank=", rank, "n=", n, "p=", p, \
-        "chunks=", [star.id for star in chunk]
+        "chunks=", [star.id for star in my_chunk]
 
-    forces = calculate_forces(chunk)
-    chunk_to_send = chunk
+    forces = calculate_forces(my_chunk)
+    chunk_to_send = my_chunk
 
     recv_rank, send_rank = _calculate_send_recv_rank_index(rank, p)
 
