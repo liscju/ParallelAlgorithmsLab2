@@ -35,7 +35,7 @@ def run_sequence_simulation(args):
     stars = create_stars(n)
 
     forces = calculate_forces(stars)
-    print "Calculated forces: ", forces
+    # print "Calculated forces: ", forces
     return forces
 
 
@@ -61,7 +61,7 @@ def run_master_proc(comm, n, p):
     forces = run_main_parallel_algorithm(comm, 0, n, p, chunk)
     for i in range(1, p):
         forces.update(comm.recv(source=i))
-    print "Total force=", forces
+    # print "Total force=", forces
 
 
 def _initialize_slave(comm):
@@ -87,8 +87,8 @@ def _calculate_send_recv_rank_index(rank, p):
 
 
 def run_main_parallel_algorithm(comm, rank, n, p, my_chunk):
-    print "Run main parallel with rank=", rank, "n=", n, "p=", p, \
-        "chunks=", [star.id for star in my_chunk]
+    # print "Run main parallel with rank=", rank, "n=", n, "p=", p, \
+    #     "chunks=", [star.id for star in my_chunk]
 
     forces = calculate_forces(my_chunk)
     chunk_to_send = my_chunk
@@ -99,8 +99,8 @@ def run_main_parallel_algorithm(comm, rank, n, p, my_chunk):
         comm.send(chunk_to_send, dest=send_rank)
         recv_chunk = comm.recv(source=recv_rank)
 
-        print "Process rank=", rank, "received chunk=", \
-            [star.id for star in recv_chunk]
+        # print "Process rank=", rank, "received chunk=", \
+        #     [star.id for star in recv_chunk]
 
         for star in my_chunk:
             star_current_force = forces[star.id]
@@ -110,7 +110,7 @@ def run_main_parallel_algorithm(comm, rank, n, p, my_chunk):
                                star_current_force[2] + star_update_force[2])
         chunk_to_send = recv_chunk
 
-    print "Process rank=", rank, "calculated force=", forces
+    # print "Process rank=", rank, "calculated force=", forces
     return forces
 
 
