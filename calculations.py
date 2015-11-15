@@ -60,9 +60,8 @@ def calculate_force(star, other_stars):
 
 
 def calculate_forces(stars):
-    """ Calculate result forces between star and others, return list of values"""
-    forces = []
-    for i in range(0, len(stars)):
-        others = stars[:i] + stars[(i+1):]
-        forces.append(calculate_force(stars[i], others))
-    return forces
+    """ Calculate result forces between star and others, return mapping
+        of star id to total force
+    """
+    return {i: calculate_force(stars[i], stars[:i] + stars[(i+1):])
+            for i in range(0, len(stars))}
