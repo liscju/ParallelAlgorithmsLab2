@@ -98,7 +98,15 @@ def run_main_parallel_algorithm(comm, rank, n, p, my_chunk):
         print "Process rank=", rank, "received chunk=", \
             [star.id for star in recv_chunk]
 
+        for star in my_chunk:
+            star_current_force = forces[star.id]
+            star_update_force = calculate_force(star, recv_chunk)
+            forces[star.id] = (star_current_force[0] + star_update_force[0],
+                               star_current_force[1] + star_update_force[1],
+                               star_current_force[2] + star_update_force[2])
         chunk_to_send = recv_chunk
+
+    print "Process rank=", rank, "calculated force=", forces
 
 
 def run_parallel_simulation(args):
