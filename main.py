@@ -93,12 +93,12 @@ def run_main_parallel_algorithm(comm, rank, n, p, chunk):
 
     for _ in range(p - 1):
         comm.send(chunk_to_send, dest=send_rank)
-        recv_chunks = comm.recv(source=recv_rank)
+        recv_chunk = comm.recv(source=recv_rank)
 
         print "Process rank=", rank, "received chunk=", \
-            [star.id for star in recv_chunks]
+            [star.id for star in recv_chunk]
 
-        chunk_to_send = recv_chunks
+        chunk_to_send = recv_chunk
 
 
 def run_parallel_simulation(args):
