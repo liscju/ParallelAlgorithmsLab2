@@ -18,13 +18,13 @@ def usage():
 
 
 def create_stars(count):
-    stars = []
+    stars = set()
     for i in range(0, count):
         mass = random.uniform(STAR_MASS_RANGE[0], STAR_MASS_RANGE[1])
         coord_x = random.uniform(STAR_COORDS_RANGE[0], STAR_COORDS_RANGE[1])
         coord_y = random.uniform(STAR_COORDS_RANGE[0], STAR_COORDS_RANGE[1])
         coord_z = random.uniform(STAR_COORDS_RANGE[0], STAR_COORDS_RANGE[1])
-        stars.append(Star(i, mass, (coord_x, coord_y, coord_z)))
+        stars.add(Star(i, mass, (coord_x, coord_y, coord_z)))
     return stars
 
 
@@ -45,7 +45,8 @@ def _send_to_slaves_portions(comm, stars_chunks_to_send):
 
 
 def divide_list_to_chunks(list_, n):
-    return [list_[start::n] for start in range(n)]
+    list_ = list(list_)
+    return [set(list_[start::n]) for start in range(n)]
 
 
 def _initialize_master(comm, n, p):

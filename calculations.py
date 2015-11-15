@@ -71,5 +71,5 @@ def calculate_forces(stars):
     """ Calculate result forces between star and others, return mapping
         of star id to total force
     """
-    return {i: calculate_force(stars[i], stars[:i] + stars[(i+1):])
-            for i in range(0, len(stars))}
+    return {star.id: calculate_force(star, stars - {star})
+            for star in stars}

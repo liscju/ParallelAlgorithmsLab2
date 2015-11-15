@@ -40,10 +40,10 @@ class TestCalculationMethods(TestCase):
         s2 = Star(2, 10, (0, 0, 1))
         s3 = Star(3, 1, (0, 1, 0))
 
-        actual_forces = calculate_forces([s1, s2, s3])
+        actual_forces = calculate_forces({s1, s2, s3})
 
         expected_first_result = (0, 10 * G, 100*G)
-        self.assertEqual(actual_forces[0], expected_first_result)
+        self.assertEqual(actual_forces[1], expected_first_result)
 
     def test_calculate_force_case1(self):
         s1 = Star(1, 10, (0, 0, 0))
