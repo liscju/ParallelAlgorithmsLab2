@@ -96,8 +96,12 @@ def run_main_parallel_algorithm(comm, rank, n, p, my_chunk):
     recv_rank, send_rank = _calculate_send_recv_rank_index(rank, p)
 
     for _ in range(p - 1):
-        comm.send(chunk_to_send, dest=send_rank)
-        recv_chunk = comm.recv(source=recv_rank)
+        if rank == 0:
+            comm.send(chunk_to_send, dest=send_rank)
+            recv_chunk = comm.recv(source=recv_rank)
+        else:
+            recv_chunk = comm.recv(source=recv_rank)
+            comm.send(chunk_to_send, dest=send_rank)
 
         # print "Process rank=", rank, "received chunk=", \
         #     [star.id for star in recv_chunk]
